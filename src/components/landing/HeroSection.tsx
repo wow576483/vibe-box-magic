@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import heroIllustration from "@/assets/hero-illustration.png";
 import khodariLogo from "@/assets/khodari-logo.jpg";
 
-const HeroSection = () => {
+const HeroSection = ({ onOrder }: { onOrder: () => void }) => {
   return (
     <section className="relative overflow-hidden bg-gradient-to-bl from-khodari-green-light via-background to-background min-h-[90vh] flex items-center">
       <div className="container mx-auto py-12 md:py-20">
@@ -38,7 +38,7 @@ const HeroSection = () => {
               <Button
                 size="lg"
                 className="text-lg px-8 py-6 rounded-xl bg-primary hover:bg-khodari-green-dark transition-all duration-250 hover:scale-105 shadow-lg"
-                onClick={() => document.getElementById("boxes")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={onOrder}
               >
                 اطلبي سلتك الآن
               </Button>
