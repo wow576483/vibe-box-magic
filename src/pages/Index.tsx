@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import HeroSection from "@/components/landing/HeroSection";
-import ProblemSection from "@/components/landing/ProblemSection";
-import BeforeAfterSection from "@/components/landing/BeforeAfterSection";
-import SolutionSection from "@/components/landing/SolutionSection";
-import HowItWorksSection from "@/components/landing/HowItWorksSection";
-import BoxesSection from "@/components/landing/BoxesSection";
-import OrderFormSection from "@/components/landing/OrderFormSection";
-import TestimonialsSection from "@/components/landing/TestimonialsSection";
-import FAQSection from "@/components/landing/FAQSection";
-import FinalCTASection from "@/components/landing/FinalCTASection";
+import StickyHeader from "@/components/landing/StickyHeader";
+import MobileStickyOrder from "@/components/landing/MobileStickyOrder";
+import SocialProofBar from "@/components/landing/SocialProofBar";
+
+const ProblemSection = lazy(() => import("@/components/landing/ProblemSection"));
+const BeforeAfterSection = lazy(() => import("@/components/landing/BeforeAfterSection"));
+const SolutionSection = lazy(() => import("@/components/landing/SolutionSection"));
+const HowItWorksSection = lazy(() => import("@/components/landing/HowItWorksSection"));
+const BoxesSection = lazy(() => import("@/components/landing/BoxesSection"));
+const OrderFormSection = lazy(() => import("@/components/landing/OrderFormSection"));
+const TrustSection = lazy(() => import("@/components/landing/TrustSection"));
+const TestimonialsSection = lazy(() => import("@/components/landing/TestimonialsSection"));
+const FAQSection = lazy(() => import("@/components/landing/FAQSection"));
+const FinalCTASection = lazy(() => import("@/components/landing/FinalCTASection"));
+
+const SectionFallback = () => <div className="py-16" />;
 
 const Index = () => {
   const [orderOpen, setOrderOpen] = useState(false);
@@ -23,18 +30,53 @@ const Index = () => {
   };
 
   return (
-    <main className="min-h-screen">
-      <HeroSection onOrder={() => handleOrder()} />
-      <ProblemSection />
-      <BeforeAfterSection />
-      <SolutionSection />
-      <HowItWorksSection />
-      <BoxesSection onOrder={handleOrder} />
-      <OrderFormSection isOpen={orderOpen} onClose={() => setOrderOpen(false)} selectedBox={selectedBox} />
-      <TestimonialsSection />
-      <FAQSection />
-      <FinalCTASection />
-    </main>
+    <>
+      <StickyHeader onOrder={() => handleOrder()} />
+      <main className="min-h-screen">
+        <HeroSection onOrder={() => handleOrder()} />
+        <SocialProofBar />
+        <Suspense fallback={<SectionFallback />}>
+          <ProblemSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <BeforeAfterSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <SolutionSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <HowItWorksSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <BoxesSection onOrder={handleOrder} />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <OrderFormSection isOpen={orderOpen} onClose={() => setOrderOpen(false)} selectedBox={selectedBox} />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <TrustSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <TestimonialsSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <FAQSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <FinalCTASection />
+        </Suspense>
+      </main>
+      <MobileStickyOrder onOrder={() => handleOrder()} />
+
+      {/* Footer */}
+      <footer className="py-8 bg-foreground text-background/80">
+        <div className="container mx-auto text-center space-y-2">
+          <p className="font-bold text-background text-lg">🌿 خضاري – Khodari</p>
+          <p className="text-sm">توصيل خضار وفواكه طازجة في قسنطينة</p>
+          <p className="text-xs text-background/50">© {new Date().getFullYear()} خضاري. جميع الحقوق محفوظة.</p>
+        </div>
+      </footer>
+    </>
   );
 };
 

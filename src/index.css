@@ -7,39 +7,39 @@
 @layer base {
   :root {
     --background: 90 20% 98%;
-    --foreground: 200 15% 15%;
+    --foreground: 200 20% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 200 15% 15%;
+    --card-foreground: 200 20% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 200 15% 15%;
+    --popover-foreground: 200 20% 12%;
 
-    --primary: 101 30% 53%;
+    --primary: 101 35% 45%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 90 15% 94%;
-    --secondary-foreground: 200 15% 15%;
+    --secondary-foreground: 200 20% 12%;
 
     --muted: 90 10% 95%;
-    --muted-foreground: 200 10% 45%;
+    --muted-foreground: 200 12% 40%;
 
     --accent: 101 30% 90%;
-    --accent-foreground: 101 30% 25%;
+    --accent-foreground: 101 35% 22%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 90 15% 88%;
-    --input: 90 15% 88%;
-    --ring: 101 30% 53%;
+    --border: 90 15% 85%;
+    --input: 90 15% 85%;
+    --ring: 101 35% 45%;
 
     --radius: 0.75rem;
 
-    --khodari-green: 101 30% 53%;
-    --khodari-green-dark: 101 35% 38%;
+    --khodari-green: 101 35% 45%;
+    --khodari-green-dark: 101 40% 32%;
     --khodari-green-light: 101 30% 92%;
-    --khodari-charcoal: 200 15% 15%;
+    --khodari-charcoal: 200 20% 12%;
     --khodari-warm: 40 30% 96%;
   }
 }
@@ -56,6 +56,7 @@
   body {
     @apply bg-background text-foreground font-cairo;
     direction: rtl;
+    padding-bottom: env(safe-area-inset-bottom, 0);
   }
 }
 
