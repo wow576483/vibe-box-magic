@@ -20,9 +20,9 @@ const HeroSection = ({ onOrder }: { onOrder: () => void }) => {
               أنتِ أم مشغولة في قسنطينة؟ ما عادش لازم تتعبي في السوق. خضاري يجهز لك سلة خضار وفواكه طازجة ويوصلها لباب دارك.
             </p>
             <ul className="space-y-2">
-              {["خضار طازج من أحسن الموردين", "توصيل سريع في قسنطينة", "الدفع عند الاستلام"].map((item) => (
+              {["خضار طازج من أحسن الموردين", "توصيل سريع في قسنطينة", "الدفع عند الاستلام – بلا مخاطرة"].map((item) => (
                 <li key={item} className="flex items-center gap-2 text-foreground">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground shrink-0">
                     <Check className="h-3 w-3" />
                   </span>
                   {item}
@@ -35,12 +35,16 @@ const HeroSection = ({ onOrder }: { onOrder: () => void }) => {
                 className="text-lg px-8 py-6 rounded-xl bg-primary hover:bg-khodari-green-dark transition-all duration-250 hover:scale-105 shadow-lg"
                 onClick={onOrder}
               >
-                اطلبي سلتك الآن
+                اطلبي سلتك الآن 🛒
               </Button>
             </div>
-            <p className="text-sm text-muted-foreground">
-              🚚 توصيل في قسنطينة – الدفع عند الاستلام
-            </p>
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <span className="flex items-center gap-1">🚚 توصيل سريع</span>
+              <span className="w-1 h-1 bg-border rounded-full" />
+              <span className="flex items-center gap-1">💵 الدفع عند الاستلام</span>
+              <span className="w-1 h-1 bg-border rounded-full" />
+              <span className="flex items-center gap-1">⭐ +127 تقييم</span>
+            </div>
           </div>
 
           {/* Hero Illustration */}
@@ -48,9 +52,11 @@ const HeroSection = ({ onOrder }: { onOrder: () => void }) => {
             <div className="relative w-80 h-80 md:w-[420px] md:h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-primary/10">
               <img
                 src={heroIllustration}
-                alt="أم تستلم سلة خضار طازجة عند باب دارها"
+                alt="أم تستلم سلة خضار طازجة عند باب دارها في قسنطينة"
                 className="w-full h-full object-cover"
                 loading="eager"
+                width={420}
+                height={420}
               />
             </div>
           </div>

@@ -11,7 +11,7 @@ const HowItWorksSection = () => {
   const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section className="py-16 md:py-24 bg-khodari-warm" ref={ref}>
+    <section id="how" className="py-16 md:py-24 bg-khodari-warm" ref={ref}>
       <div className="container mx-auto">
         <h2 className="text-2xl md:text-4xl font-bold text-foreground text-center mb-12">
           كيفاش تطلبي؟ 🤔
