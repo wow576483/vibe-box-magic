@@ -1,6 +1,6 @@
 import { Check, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroIllustration from "@/assets/hero-illustration.png";
+import heroIllustration from "@/assets/hero-illustration.jpg";
 import khodariLogo from "@/assets/khodari-logo.jpg";
 
 const HeroSection = ({ onOrder }: { onOrder: () => void }) => {
@@ -9,7 +9,10 @@ const HeroSection = ({ onOrder }: { onOrder: () => void }) => {
       <div className="container mx-auto py-12 md:py-20">
         {/* Logo */}
         <div className="flex justify-center md:justify-start mb-6 animate-fade-up">
-          <img src={khodariLogo} alt="خضاري - Khodari" className="h-16 md:h-20 object-contain" />
+          <div className="flex items-center gap-3">
+            <img src={khodariLogo} alt="خضاري - Khodari" className="h-14 md:h-16 w-14 md:w-16 rounded-full object-cover shadow-md border-2 border-primary/20" />
+            <span className="text-xl md:text-2xl font-bold text-primary">KHODARI <span className="text-accent-foreground">خضاري</span></span>
+          </div>
         </div>
         <div className="grid md:grid-cols-2 gap-10 items-center">
           {/* Text */}
@@ -50,7 +53,7 @@ const HeroSection = ({ onOrder }: { onOrder: () => void }) => {
 
           {/* Hero Illustration */}
           <div className="animate-fade-up-delay-2 flex justify-center">
-            <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-3xl overflow-hidden shadow-xl">
+            <div className="relative w-80 h-80 md:w-[420px] md:h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-primary/10">
               <img
                 src={heroIllustration}
                 alt="أم تستلم سلة خضار طازجة عند باب دارها"
