@@ -29,7 +29,7 @@ const boxes = [
   },
 ];
 
-const BoxesSection = () => {
+const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
   const { ref, isVisible } = useScrollReveal();
 
   return (
@@ -65,6 +65,7 @@ const BoxesSection = () => {
                     ? "bg-primary hover:bg-khodari-green-dark text-primary-foreground"
                     : "bg-secondary hover:bg-accent text-secondary-foreground"
                 }`}
+                onClick={() => onOrder(box.name)}
               >
                 اطلبي هذه السلة
               </Button>
