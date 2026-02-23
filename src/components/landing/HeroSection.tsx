@@ -1,19 +1,11 @@
 import { Check, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroIllustration from "@/assets/hero-illustration.jpg";
-import khodariLogo from "@/assets/khodari-logo.jpg";
 
 const HeroSection = ({ onOrder }: { onOrder: () => void }) => {
   return (
     <section className="relative overflow-hidden bg-gradient-to-bl from-khodari-green-light via-background to-background min-h-[90vh] flex items-center">
       <div className="container mx-auto py-12 md:py-20">
-        {/* Logo */}
-        <div className="flex justify-center md:justify-start mb-6 animate-fade-up">
-          <div className="flex items-center gap-3">
-            <img src={khodariLogo} alt="خضاري - Khodari" className="h-14 md:h-16 w-14 md:w-16 rounded-full object-cover shadow-md border-2 border-primary/20" />
-            <span className="text-xl md:text-2xl font-bold text-primary">KHODARI <span className="text-accent-foreground">خضاري</span></span>
-          </div>
-        </div>
         <div className="grid md:grid-cols-2 gap-10 items-center">
           {/* Text */}
           <div className="space-y-6 animate-fade-up">
