@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MapPin, Send, X } from "lucide-react";
+import { Send, X, Loader2, CheckCircle2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 interface OrderFormSectionProps {
   isOpen: boolean;
@@ -16,20 +18,79 @@ const OrderFormSection = ({ isOpen, onClose, selectedBox }: OrderFormSectionProp
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [deliveryTime, setDeliveryTime] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const successRef = useRef<HTMLDivElement>(null);
 
   if (!isOpen) return null;
 
-  const handleShareLocation = () => {
-    const text = `📍 موقعي الحالي: أرسل موقعك هنا ليصلك الطلب`;
-    window.open(`https://wa.me/213XXXXXXXXX?text=${encodeURIComponent(text)}`, "_blank");
+  const resetForm = () => {
+    setName("");
+    setPhone("");
+    setAddress("");
+    setDeliveryTime("");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const boxText = selectedBox ? `\n🥬 السلة: ${selectedBox}` : "";
-    const message = `🛒 طلب جديد من خضاري${boxText}\n👤 الاسم: ${name}\n📞 الهاتف: ${phone}\n📍 العنوان: ${address}\n🕐 أفضل وقت للتوصيل: ${deliveryTime}`;
-    window.open(`https://wa.me/213XXXXXXXXX?text=${encodeURIComponent(message)}`, "_blank");
+    if (loading) return;
+
+    setLoading(true);
+    try {
+      const { error } = await supabase.from("orders").insert([{
+        name,
+        phone,
+        address,
+        box_type: selectedBox || null,
+        delivery_time: deliveryTime,
+        city: "قسنطينة",
+        quantity: 1,
+      }]);
+
+      if (error) throw error;
+
+      setSuccess(true);
+      resetForm();
+      setTimeout(() => {
+        successRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+
+      toast({
+        title: "✅ تم إرسال طلبك بنجاح!",
+        description: "سنتواصل معك قريباً لتأكيد الطلب.",
+      });
+    } catch (err) {
+      toast({
+        title: "❌ حدث خطأ",
+        description: "تعذر إرسال الطلب. حاولي مرة أخرى.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (success) {
+    return (
+      <section id="order-form" className="py-16 bg-gradient-to-b from-khodari-green-light/30 to-background">
+        <div className="container mx-auto max-w-lg" ref={successRef}>
+          <div className="bg-card rounded-2xl shadow-xl p-8 border border-border text-center space-y-4">
+            <CheckCircle2 className="h-16 w-16 text-primary mx-auto" />
+            <h2 className="text-2xl font-bold text-foreground">تم استلام طلبك بنجاح! 🎉</h2>
+            <p className="text-muted-foreground">سنتواصل معك قريباً عبر الهاتف لتأكيد الطلب والتوصيل.</p>
+            <p className="text-sm text-muted-foreground">💳 تذكري: الدفع عند الاستلام فقط</p>
+            <Button
+              onClick={() => { setSuccess(false); onClose(); }}
+              variant="outline"
+              className="mt-4"
+            >
+              العودة للصفحة الرئيسية
+            </Button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="order-form" className="py-16 bg-gradient-to-b from-khodari-green-light/30 to-background">
@@ -61,6 +122,7 @@ const OrderFormSection = ({ isOpen, onClose, selectedBox }: OrderFormSectionProp
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
+                disabled={loading}
               />
             </div>
 
@@ -75,6 +137,7 @@ const OrderFormSection = ({ isOpen, onClose, selectedBox }: OrderFormSectionProp
                 required
                 dir="ltr"
                 className="text-right"
+                disabled={loading}
               />
             </div>
 
@@ -86,22 +149,13 @@ const OrderFormSection = ({ isOpen, onClose, selectedBox }: OrderFormSectionProp
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 required
+                disabled={loading}
               />
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className="w-full gap-2 text-primary border-primary/30 hover:bg-primary/5"
-                onClick={handleShareLocation}
-              >
-                <MapPin className="h-4 w-4" />
-                شاركي موقعك على واتساب
-              </Button>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="delivery-time">أفضل وقت للتوصيل</Label>
-              <Select value={deliveryTime} onValueChange={setDeliveryTime} required>
+              <Select value={deliveryTime} onValueChange={setDeliveryTime} required disabled={loading}>
                 <SelectTrigger id="delivery-time">
                   <SelectValue placeholder="اختاري الوقت المناسب" />
                 </SelectTrigger>
@@ -117,9 +171,19 @@ const OrderFormSection = ({ isOpen, onClose, selectedBox }: OrderFormSectionProp
               type="submit"
               size="lg"
               className="w-full text-lg py-6 rounded-xl bg-primary hover:bg-khodari-green-dark transition-all duration-250 hover:scale-[1.02] shadow-lg gap-2"
+              disabled={loading}
             >
-              <Send className="h-5 w-5" />
-              أرسلي الطلب عبر واتساب
+              {loading ? (
+                <>
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                  جاري الإرسال...
+                </>
+              ) : (
+                <>
+                  <Send className="h-5 w-5" />
+                  أرسلي الطلب
+                </>
+              )}
             </Button>
 
             <p className="text-xs text-muted-foreground text-center">
