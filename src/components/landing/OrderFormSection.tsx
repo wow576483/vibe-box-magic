@@ -107,11 +107,16 @@ const OrderFormSection = ({ isOpen, onClose, selectedBox }: OrderFormSectionProp
           <h2 className="text-2xl font-bold text-foreground text-center mb-2">
             🛒 أكملي طلبك
           </h2>
-          <p className="text-muted-foreground text-center mb-6 text-sm">
+          <p className="text-muted-foreground text-center mb-4 text-sm">
             {selectedBox
-              ? `اخترتِ: ${selectedBox} – أدخلي معلوماتك لنوصلها لدارك`
+              ? `أدخلي معلوماتك لنوصلها لدارك`
               : "أدخلي معلوماتك لنوصلك سلتك الطازجة"}
           </p>
+          {selectedBox && (
+            <p className="text-center text-primary font-semibold mb-4">
+              🥬 اخترتِ {selectedBox} – اختيار ممتاز 👌
+            </p>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
@@ -181,13 +186,18 @@ const OrderFormSection = ({ isOpen, onClose, selectedBox }: OrderFormSectionProp
               ) : (
                 <>
                   <Send className="h-5 w-5" />
-                  أرسلي الطلب
+                  🚀 تأكيد الطلب الآن
                 </>
               )}
             </Button>
 
-            <p className="text-xs text-muted-foreground text-center">
-              💳 الدفع عند الاستلام – لا حاجة للدفع الإلكتروني
+            <p className="text-center text-primary text-sm font-medium mb-2">
+              🌿 نختار أفضل الخضر يومياً من السوق المركزي
+            </p>
+            <p className="text-xs text-muted-foreground text-center space-y-0.5">
+              ✔ الدفع عند الاستلام فقط<br />
+              ✔ تفقدي السلة قبل الدفع<br />
+              ✔ إلغاء مجاني إذا لم تعجبك
             </p>
           </form>
         </div>
