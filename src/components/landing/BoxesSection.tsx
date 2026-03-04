@@ -115,22 +115,24 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
               <h3 className="text-xl font-bold text-foreground mb-1">{box.name}</h3>
 
               {/* Benefit */}
-              <p className="text-sm text-muted-foreground mb-3">{box.benefit}</p>
+              <p className="text-sm text-muted-foreground mb-2">{box.benefit}</p>
 
               {/* Social proof */}
               <p className="text-xs font-medium text-primary mb-4">{box.socialProof}</p>
 
               {/* Price */}
               <div className="text-3xl font-extrabold text-primary">{box.price}</div>
-              <p className="text-xs text-muted-foreground mb-1">{box.priceNote}</p>
-              <p className="text-[11px] text-muted-foreground/70 mb-4">ضمان استبدال فوري عند عدم الرضا</p>
+              <p className="text-xs text-muted-foreground">{box.priceNote}</p>
+              <p className="text-[11px] text-muted-foreground/70 mb-1">💳 الدفع عند الاستلام</p>
+              <p className="text-[11px] text-destructive/60 font-medium mb-4">⏳ الطلبات اليومية محدودة للحفاظ على الجودة</p>
 
               {/* Trust bar */}
-              <div className="bg-muted/40 rounded-xl p-3 mb-4 space-y-1">
+              <div className="bg-muted/40 rounded-xl p-3 mb-2 space-y-1">
                 {trustPoints.map((point) => (
                   <p key={point} className="text-xs text-foreground/80">{point}</p>
                 ))}
               </div>
+              <p className="text-[11px] text-muted-foreground text-center mb-4">🏡 وفّري وقت السوق واهتمي بعائلتك</p>
 
               {/* Details button */}
               <Button
@@ -140,7 +142,7 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
                 onClick={() => setSelectedBox(box)}
               >
                 <Info className="h-4 w-4" />
-                تفاصيل السلة
+                ماذا تحتوي السلة؟
               </Button>
 
               {/* CTA */}
