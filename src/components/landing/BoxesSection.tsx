@@ -4,12 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { Info, Truck, ShoppingBasket, CheckCircle2 } from "lucide-react";
+import boxSmallImg from "@/assets/box-small.jpg";
+import boxMediumImg from "@/assets/box-medium.jpg";
+import boxLargeImg from "@/assets/box-large.jpg";
 
 const boxes = [
   {
     name: "سلة الزوجين / الطلبة",
     audience: "شخصين",
     duration: "3-4 أيام",
+    image: boxSmallImg,
     benefit: "تكفي شخصين لمدة 4 أيام • تغنيك عن 3 زيارات للسوق",
     socialProof: "⭐ 127 عائلة طلبتها هذا الشهر",
     price: "1,200 دج",
@@ -29,6 +33,7 @@ const boxes = [
     name: "السلة الأساسية",
     audience: "عائلة 3-4 أفراد",
     duration: "5-6 أيام",
+    image: boxMediumImg,
     benefit: "تكفي عائلة من 4 أفراد لأسبوع تقريباً • وداعاً للسوق",
     socialProof: "⭐ 243 عائلة طلبتها هذا الشهر",
     price: "2,200 دج",
@@ -49,6 +54,7 @@ const boxes = [
     name: "السلة العائلية الكبيرة",
     audience: "عائلة +5 أفراد",
     duration: "أسبوع كامل",
+    image: boxLargeImg,
     benefit: "تكفي عائلة كبيرة أسبوع كامل • توصيل مجاني",
     socialProof: "⭐ 89 عائلة طلبتها هذا الشهر",
     price: "3,500 دج",
@@ -102,10 +108,8 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
                 </Badge>
               )}
 
-              {/* Placeholder image */}
-              <div className="w-full h-36 rounded-xl bg-muted/60 flex items-center justify-center mb-4">
-                <ShoppingBasket className="h-12 w-12 text-primary/40" />
-              </div>
+              {/* Box image */}
+              <img src={box.image} alt={box.name} className="w-full h-40 rounded-xl object-cover mb-4" loading="lazy" />
 
               {/* Name */}
               <h3 className="text-xl font-bold text-foreground mb-1">{box.name}</h3>
