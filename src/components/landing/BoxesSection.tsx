@@ -3,15 +3,17 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { Info, Truck, ShoppingBasket } from "lucide-react";
+import { Info, Truck, ShoppingBasket, CheckCircle2 } from "lucide-react";
 
 const boxes = [
   {
     name: "سلة الزوجين / الطلبة",
     audience: "شخصين",
     duration: "3-4 أيام",
-    contents: "طماطم، بطاطا، بصل، جزر، فلفل، فواكه موسمية",
+    benefit: "تكفي شخصين لمدة 4 أيام • تغنيك عن 3 زيارات للسوق",
+    socialProof: "⭐ 127 عائلة طلبتها هذا الشهر",
     price: "1,200 دج",
+    priceNote: "شامل خدمة التوصيل الخاصة",
     popular: false,
     deliveryPrice: "200 دج",
     details: [
@@ -27,8 +29,10 @@ const boxes = [
     name: "السلة الأساسية",
     audience: "عائلة 3-4 أفراد",
     duration: "5-6 أيام",
-    contents: "تشكيلة كاملة من الخضار والفواكه الموسمية الطازجة",
+    benefit: "تكفي عائلة من 4 أفراد لأسبوع تقريباً • وداعاً للسوق",
+    socialProof: "⭐ 243 عائلة طلبتها هذا الشهر",
     price: "2,200 دج",
+    priceNote: "شامل خدمة التوصيل الخاصة",
     popular: true,
     deliveryPrice: "200 دج",
     details: [
@@ -45,8 +49,10 @@ const boxes = [
     name: "السلة العائلية الكبيرة",
     audience: "عائلة +5 أفراد",
     duration: "أسبوع كامل",
-    contents: "كمية كبيرة ومتنوعة من خضار وفواكه تكفي الأسبوع",
+    benefit: "تكفي عائلة كبيرة أسبوع كامل • توصيل مجاني",
+    socialProof: "⭐ 89 عائلة طلبتها هذا الشهر",
     price: "3,500 دج",
+    priceNote: "شامل التوصيل المجاني",
     popular: false,
     deliveryPrice: "مجاني",
     details: [
@@ -60,6 +66,12 @@ const boxes = [
       { item: "فواكه موسمية", weight: "3 كغ", price: "750 دج" },
     ],
   },
+];
+
+const trustPoints = [
+  "✔ مختارة صباحًا من السوق",
+  "✔ فحص جودة يدوي",
+  "✔ مغلفة بطريقة نظيفة وآمنة",
 ];
 
 const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
@@ -79,7 +91,7 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
           {boxes.map((box, i) => (
             <div
               key={box.name}
-              className={`relative bg-card rounded-2xl p-6 border-2 transition-all duration-300 hover:scale-[1.03] hover:shadow-xl ${
+              className={`relative bg-card rounded-2xl p-6 border-2 flex flex-col transition-all duration-300 hover:scale-[1.03] hover:shadow-xl ${
                 box.popular ? "border-primary shadow-lg" : "border-border"
               } ${isVisible ? "animate-fade-up" : "opacity-0"}`}
               style={{ animationDelay: `${i * 0.12}s` }}
@@ -89,11 +101,34 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
                   الأكثر طلباً ⭐
                 </Badge>
               )}
-              <h3 className="text-xl font-bold text-foreground mb-2">{box.name}</h3>
-              <p className="text-sm text-muted-foreground mb-4">لـ {box.audience} • تكفي {box.duration}</p>
-              <p className="text-sm text-foreground mb-5">{box.contents}</p>
-              <div className="text-3xl font-extrabold text-primary mb-4">{box.price}</div>
 
+              {/* Placeholder image */}
+              <div className="w-full h-36 rounded-xl bg-muted/60 flex items-center justify-center mb-4">
+                <ShoppingBasket className="h-12 w-12 text-primary/40" />
+              </div>
+
+              {/* Name */}
+              <h3 className="text-xl font-bold text-foreground mb-1">{box.name}</h3>
+
+              {/* Benefit */}
+              <p className="text-sm text-muted-foreground mb-3">{box.benefit}</p>
+
+              {/* Social proof */}
+              <p className="text-xs font-medium text-primary mb-4">{box.socialProof}</p>
+
+              {/* Price */}
+              <div className="text-3xl font-extrabold text-primary">{box.price}</div>
+              <p className="text-xs text-muted-foreground mb-1">{box.priceNote}</p>
+              <p className="text-[11px] text-muted-foreground/70 mb-4">ضمان استبدال فوري عند عدم الرضا</p>
+
+              {/* Trust bar */}
+              <div className="bg-muted/40 rounded-xl p-3 mb-4 space-y-1">
+                {trustPoints.map((point) => (
+                  <p key={point} className="text-xs text-foreground/80">{point}</p>
+                ))}
+              </div>
+
+              {/* Details button */}
               <Button
                 variant="ghost"
                 size="sm"
@@ -104,15 +139,16 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
                 تفاصيل السلة
               </Button>
 
+              {/* CTA */}
               <Button
-                className={`w-full rounded-xl py-5 text-base transition-all duration-250 ${
+                className={`w-full rounded-xl py-5 text-base mt-auto transition-all duration-250 ${
                   box.popular
                     ? "bg-primary hover:bg-khodari-green-dark text-primary-foreground"
                     : "bg-secondary hover:bg-accent text-secondary-foreground"
                 }`}
                 onClick={() => onOrder(box.name)}
               >
-                اطلبي هذه السلة
+                اطلبي سلتك الآن واستلميها اليوم
               </Button>
             </div>
           ))}
@@ -133,13 +169,11 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
           </DialogHeader>
 
           <div className="space-y-1">
-            {/* Table header */}
             <div className="grid grid-cols-3 gap-2 text-xs font-semibold text-muted-foreground border-b border-border pb-2 px-1">
               <span>المنتج</span>
               <span className="text-center">الوزن</span>
               <span className="text-left">السعر</span>
             </div>
-            {/* Items */}
             {selectedBox?.details.map((d, idx) => (
               <div
                 key={d.item}
@@ -154,7 +188,6 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
             ))}
           </div>
 
-          {/* Delivery + Total */}
           <div className="border-t border-border pt-3 space-y-2">
             <div className="flex items-center justify-between text-sm">
               <span className="flex items-center gap-1.5 text-muted-foreground">
@@ -180,7 +213,7 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
               }
             }}
           >
-            اطلبي هذه السلة
+            اطلبي سلتك الآن واستلميها اليوم
           </Button>
         </DialogContent>
       </Dialog>
