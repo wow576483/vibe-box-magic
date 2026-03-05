@@ -1,18 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { Info } from "lucide-react";
-import boxSmallImg from "@/assets/box-small.jpg";
-import boxMediumImg from "@/assets/box-medium.jpg";
-import boxLargeImg from "@/assets/box-large.jpg";
 
 const boxes = [
   {
     name: "سلة الزوجين / الطلبة",
     audience: "شخصين",
     duration: "3-4 أيام",
-    image: boxSmallImg,
+    
     benefit: "تكفي شخصين لمدة 4 أيام • تغنيك عن 3 زيارات للسوق",
     socialProof: "⭐ 127 عائلة طلبتها هذا الشهر",
     price: "1,200 دج",
@@ -32,7 +27,7 @@ const boxes = [
     name: "السلة الأساسية",
     audience: "عائلة 3-4 أفراد",
     duration: "5-6 أيام",
-    image: boxMediumImg,
+    
     benefit: "تكفي عائلة من 4 أفراد لأسبوع تقريباً • وداعاً للسوق",
     socialProof: "⭐ 243 عائلة طلبتها هذا الشهر",
     price: "2,200 دج",
@@ -53,7 +48,7 @@ const boxes = [
     name: "سلة العائلة الأسبوعية",
     audience: "عائلة +5 أفراد",
     duration: "أسبوع كامل",
-    image: boxLargeImg,
+    
     benefit: "تكفي عائلة كبيرة أسبوع كامل • توصيل مجاني",
     socialProof: "⭐ 89 عائلة طلبتها هذا الشهر",
     price: "3,500 دج",
@@ -82,6 +77,12 @@ const trustPoints = [
 const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
   const { ref, isVisible } = useScrollReveal();
 
+  const calcTotal = (box: typeof boxes[0]) => {
+    const productsTotal = box.details.reduce((sum, d) => sum + parseInt(d.price.replace(/[^\d]/g, '')), 0);
+    const deliveryNum = box.deliveryPrice === "مجاني" ? 0 : parseInt(box.deliveryPrice.replace(/[^\d]/g, ''));
+    return { productsTotal, deliveryNum, total: productsTotal + deliveryNum };
+  };
+
   return (
     <section id="boxes" className="py-16 md:py-24 bg-background" ref={ref}>
       <div className="container mx-auto">
@@ -92,83 +93,79 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
           عندنا سلات تناسب كل عائلة — من الزوجين للعائلات الكبيرة
         </p>
         <div className="grid md:grid-cols-3 gap-6">
-          {boxes.map((box, i) => (
-            <div
-              key={box.name}
-              className={`relative bg-card rounded-2xl p-6 border-2 flex flex-col transition-all duration-300 hover:scale-[1.03] hover:shadow-xl ${
-                box.popular ? "border-primary shadow-lg" : "border-border"
-              } ${isVisible ? "animate-fade-up" : "opacity-0"}`}
-              style={{ animationDelay: `${i * 0.12}s` }}
-            >
-              {box.popular && (
-                <Badge className="absolute -top-3 right-4 bg-primary text-primary-foreground px-3 py-1">
-                  الأكثر طلباً ⭐
-                </Badge>
-              )}
+          {boxes.map((box, i) => {
+            const { productsTotal, deliveryNum, total } = calcTotal(box);
+            return (
+              <div
+                key={box.name}
+                className={`relative bg-card rounded-2xl border-2 flex flex-col transition-all duration-300 hover:scale-[1.02] hover:shadow-xl overflow-hidden ${
+                  box.popular ? "border-primary shadow-lg" : "border-border"
+                } ${isVisible ? "animate-fade-up" : "opacity-0"}`}
+                style={{ animationDelay: `${i * 0.12}s` }}
+              >
+                {box.popular && (
+                  <Badge className="absolute top-3 right-4 z-10 bg-primary text-primary-foreground px-3 py-1">
+                    الأكثر طلباً ⭐
+                  </Badge>
+                )}
 
-              {/* Box image */}
-              <img src={box.image} alt={box.name} className="w-full h-40 rounded-xl object-cover mb-4" loading="lazy" />
+                {/* Header */}
+                <div className="p-6 pb-4 text-center border-b border-border">
+                  <h3 className="text-xl font-bold text-foreground mb-1">🛒 {box.name}</h3>
+                  <p className="text-base font-semibold text-foreground/90 mb-1">
+                    {box.audience} تكفي {box.duration}
+                  </p>
+                  <p className="text-sm text-muted-foreground">🌿 خضار طازجة يومياً من السوق مباشرة</p>
+                </div>
 
-              {/* Name */}
-              <h3 className="text-xl font-bold text-foreground mb-1">{box.name}</h3>
-
-              {/* Benefit */}
-              <p className="text-sm text-muted-foreground mb-2">{box.benefit}</p>
-
-              {/* Social proof */}
-              <p className="text-xs font-medium text-primary mb-4">{box.socialProof}</p>
-
-              {/* Price */}
-              <div className="text-3xl font-extrabold text-primary mt-1">{box.price}</div>
-              <p className="text-xs text-muted-foreground mb-6">{box.priceNote}</p>
-
-              {/* Trust bar */}
-              <div className="bg-muted/40 rounded-xl p-3 mb-6 space-y-1.5">
-                {trustPoints.map((point) => (
-                  <p key={point} className="text-xs text-foreground/80">{point}</p>
-                ))}
-              </div>
-
-              {/* Details - Expandable */}
-              <Collapsible>
-                <CollapsibleTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="w-full mb-4 gap-2 text-muted-foreground hover:text-primary hover:bg-primary/5 border border-border rounded-xl"
-                  >
-                    <Info className="h-4 w-4" />
-                    ماذا تحتوي السلة؟
-                  </Button>
-                </CollapsibleTrigger>
-                <CollapsibleContent className="mb-4 overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
-                  <div className="bg-muted/30 rounded-xl p-3 space-y-1.5">
-                    {box.details.map((d) => (
-                      <div key={d.item} className="flex justify-between text-xs text-foreground/80">
-                        <span>{d.item}</span>
-                        <span className="text-muted-foreground">{d.weight}</span>
+                {/* Items Table */}
+                <div className="px-4 py-3 flex-1">
+                  <div className="space-y-0">
+                    {box.details.map((d, idx) => (
+                      <div
+                        key={d.item}
+                        className={`flex items-center justify-between py-3 px-3 rounded-xl text-sm ${
+                          idx % 2 === 0 ? "bg-muted/40" : ""
+                        }`}
+                      >
+                        <span className="font-semibold text-foreground flex-1 text-right">{d.item}</span>
+                        <span className="text-muted-foreground flex-1 text-center">{d.weight}</span>
+                        <span className="text-foreground flex-1 text-left">{d.price}</span>
                       </div>
                     ))}
                   </div>
-                </CollapsibleContent>
-              </Collapsible>
+                </div>
 
-              {/* CTA */}
-              <Button
-                className={`w-full rounded-xl py-5 text-base mt-auto transition-all duration-250 ${
-                  box.popular
-                    ? "bg-primary hover:bg-khodari-green-dark text-primary-foreground"
-                    : "bg-secondary hover:bg-accent text-secondary-foreground"
-                }`}
-                onClick={() => onOrder(box.name)}
-              >
-                اطلبي سلتك الآن
-              </Button>
-            </div>
-          ))}
+                {/* Totals */}
+                <div className="px-6 py-4 border-t border-border space-y-2">
+                  <div className="flex justify-between text-sm text-foreground/80">
+                    <span>قيمة المنتجات</span>
+                    <span>{productsTotal.toLocaleString()} دج</span>
+                  </div>
+                  <div className="flex justify-between text-sm text-foreground/80">
+                    <span>🚚 التوصيل</span>
+                    <span>{box.deliveryPrice === "مجاني" ? "مجاني" : box.deliveryPrice}</span>
+                  </div>
+                  <div className="flex justify-between items-center pt-2 border-t border-border">
+                    <span className="font-bold text-foreground text-base">المجموع</span>
+                    <span className="font-extrabold text-primary text-2xl">{total.toLocaleString()} دج</span>
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <div className="p-4 pt-0">
+                  <Button
+                    className="w-full rounded-xl py-5 text-base bg-primary hover:bg-khodari-green-dark text-primary-foreground transition-all duration-250"
+                    onClick={() => onOrder(box.name)}
+                  >
+                    🛒 اطلبي سلتك الآن – الدفع عند الاستلام
+                  </Button>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
-
     </section>
   );
 };
