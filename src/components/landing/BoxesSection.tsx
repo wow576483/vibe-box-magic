@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { Info } from "lucide-react";
+import { Info, ChevronDown, Truck } from "lucide-react";
 import boxSmallImg from "@/assets/box-small.jpg";
 import boxMediumImg from "@/assets/box-medium.jpg";
 import boxLargeImg from "@/assets/box-large.jpg";
@@ -135,20 +135,50 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="w-full mb-4 gap-2 text-muted-foreground hover:text-primary hover:bg-primary/5 border border-border rounded-xl"
+                    className="w-full mb-4 gap-2 text-muted-foreground hover:text-primary hover:bg-primary/5 border border-border rounded-xl group"
                   >
                     <Info className="h-4 w-4" />
                     ماذا تحتوي السلة؟
+                    <ChevronDown className="h-4 w-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                   </Button>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="mb-4 overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
-                  <div className="bg-muted/30 rounded-xl p-3 space-y-1.5">
-                    {box.details.map((d) => (
-                      <div key={d.item} className="flex justify-between text-xs text-foreground/80">
-                        <span>{d.item}</span>
-                        <span className="text-muted-foreground">{d.weight}</span>
+                  <div className="rounded-xl border border-border overflow-hidden">
+                    {/* Header */}
+                    <div className="grid grid-cols-3 bg-muted/60 px-4 py-2.5 text-xs font-semibold text-foreground/70">
+                      <span className="text-right">المنتج</span>
+                      <span className="text-center">الوزن</span>
+                      <span className="text-left">السعر</span>
+                    </div>
+                    {/* Items */}
+                    {box.details.map((d, idx) => (
+                      <div
+                        key={d.item}
+                        className={`grid grid-cols-3 px-4 py-3 text-sm ${
+                          idx % 2 === 0 ? "bg-card" : "bg-muted/20"
+                        } ${idx < box.details.length - 1 ? "border-b border-border/50" : ""}`}
+                        style={{ animationDelay: `${idx * 0.04}s` }}
+                      >
+                        <span className="text-right font-medium text-foreground">{d.item}</span>
+                        <span className="text-center text-muted-foreground">{d.weight}</span>
+                        <span className="text-left text-foreground/80">{d.price}</span>
                       </div>
                     ))}
+                    {/* Summary */}
+                    <div className="border-t-2 border-border bg-muted/30 px-4 py-3 space-y-2">
+                      <div className="flex justify-between text-sm text-foreground/70">
+                        <span>قيمة المنتجات</span>
+                        <span>{box.details.reduce((sum, d) => sum + parseInt(d.price), 0).toLocaleString("ar-DZ")} دج</span>
+                      </div>
+                      <div className="flex justify-between text-sm text-foreground/70 items-center">
+                        <span className="flex items-center gap-1.5"><Truck className="h-3.5 w-3.5" /> التوصيل</span>
+                        <span>{box.deliveryPrice}</span>
+                      </div>
+                      <div className="flex justify-between text-base font-bold text-primary bg-primary/10 rounded-lg px-3 py-2 mt-1">
+                        <span>المجموع</span>
+                        <span>{box.price}</span>
+                      </div>
+                    </div>
                   </div>
                 </CollapsibleContent>
               </Collapsible>
