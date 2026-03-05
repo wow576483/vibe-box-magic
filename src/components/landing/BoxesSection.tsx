@@ -51,7 +51,7 @@ const boxes = [
     ],
   },
   {
-    name: "السلة العائلية الكبيرة",
+    name: "سلة العائلة الأسبوعية",
     audience: "عائلة +5 أفراد",
     duration: "أسبوع كامل",
     image: boxLargeImg,
@@ -123,8 +123,9 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
               {/* Price */}
               <div className="text-3xl font-extrabold text-primary">{box.price}</div>
               <p className="text-xs text-muted-foreground">{box.priceNote}</p>
-              <p className="text-[11px] text-muted-foreground/70 mb-1">💳 الدفع عند الاستلام</p>
-              <p className="text-[11px] text-destructive/60 font-medium mb-4">⏳ الطلبات اليومية محدودة للحفاظ على الجودة</p>
+              <p className="text-[11px] text-muted-foreground/70">💳 الدفع عند الاستلام</p>
+              <p className="text-[11px] text-primary/70 mb-1">🚚 توصيل في نفس اليوم داخل قسنطينة</p>
+              <p className="text-[11px] text-muted-foreground font-medium mb-4">⏳ الطلبات اليومية محدودة للحفاظ على الجودة</p>
 
               {/* Trust bar */}
               <div className="bg-muted/40 rounded-xl p-3 mb-2 space-y-1">
@@ -132,7 +133,7 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
                   <p key={point} className="text-xs text-foreground/80">{point}</p>
                 ))}
               </div>
-              <p className="text-[11px] text-muted-foreground text-center mb-4">🏡 وفّري وقت السوق واهتمي بعائلتك</p>
+              <p className="text-[11px] text-muted-foreground text-center mb-4">🏡 وفّري وقت السوق واستمتعي بوقتك مع عائلتك</p>
 
               {/* Details button */}
               <Button
