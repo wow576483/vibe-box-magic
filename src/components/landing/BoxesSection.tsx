@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { Info, Truck, ShoppingBasket, CheckCircle2 } from "lucide-react";
+import { Info } from "lucide-react";
 import boxSmallImg from "@/assets/box-small.jpg";
 import boxMediumImg from "@/assets/box-medium.jpg";
 import boxLargeImg from "@/assets/box-large.jpg";
@@ -82,7 +81,6 @@ const trustPoints = [
 
 const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
   const { ref, isVisible } = useScrollReveal();
-  const [selectedBox, setSelectedBox] = useState<(typeof boxes)[0] | null>(null);
 
   return (
     <section id="boxes" className="py-16 md:py-24 bg-background" ref={ref}>
@@ -121,30 +119,39 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
               <p className="text-xs font-medium text-primary mb-4">{box.socialProof}</p>
 
               {/* Price */}
-              <div className="text-3xl font-extrabold text-primary">{box.price}</div>
-              <p className="text-xs text-muted-foreground">{box.priceNote}</p>
-              <p className="text-[11px] text-muted-foreground/70">💳 الدفع عند الاستلام</p>
-              <p className="text-[11px] text-primary/70 mb-1">🚚 توصيل في نفس اليوم داخل قسنطينة</p>
-              <p className="text-[11px] text-muted-foreground font-medium mb-4">⏳ الطلبات اليومية محدودة للحفاظ على الجودة</p>
+              <div className="text-3xl font-extrabold text-primary mt-1">{box.price}</div>
+              <p className="text-xs text-muted-foreground mb-6">{box.priceNote}</p>
 
               {/* Trust bar */}
-              <div className="bg-muted/40 rounded-xl p-3 mb-2 space-y-1">
+              <div className="bg-muted/40 rounded-xl p-3 mb-6 space-y-1.5">
                 {trustPoints.map((point) => (
                   <p key={point} className="text-xs text-foreground/80">{point}</p>
                 ))}
               </div>
-              <p className="text-[11px] text-muted-foreground text-center mb-4">🏡 وفّري وقت السوق واستمتعي بوقتك مع عائلتك</p>
 
-              {/* Details button */}
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-full mb-3 gap-2 text-muted-foreground hover:text-primary hover:bg-primary/5 border border-border rounded-xl"
-                onClick={() => setSelectedBox(box)}
-              >
-                <Info className="h-4 w-4" />
-                ماذا تحتوي السلة؟
-              </Button>
+              {/* Details - Expandable */}
+              <Collapsible>
+                <CollapsibleTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="w-full mb-4 gap-2 text-muted-foreground hover:text-primary hover:bg-primary/5 border border-border rounded-xl"
+                  >
+                    <Info className="h-4 w-4" />
+                    ماذا تحتوي السلة؟
+                  </Button>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="mb-4">
+                  <div className="bg-muted/30 rounded-xl p-3 space-y-1.5">
+                    {box.details.map((d) => (
+                      <div key={d.item} className="flex justify-between text-xs text-foreground/80">
+                        <span>{d.item}</span>
+                        <span className="text-muted-foreground">{d.weight}</span>
+                      </div>
+                    ))}
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
 
               {/* CTA */}
               <Button
@@ -155,75 +162,13 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
                 }`}
                 onClick={() => onOrder(box.name)}
               >
-                اطلبي سلتك الآن واستلميها اليوم
+                اطلبي سلتك الآن
               </Button>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Details Dialog */}
-      <Dialog open={!!selectedBox} onOpenChange={(open) => !open && setSelectedBox(null)}>
-        <DialogContent className="max-w-md rounded-2xl" dir="rtl">
-          <DialogHeader>
-            <DialogTitle className="text-xl flex items-center gap-2 justify-center">
-              <ShoppingBasket className="h-5 w-5 text-primary" />
-              {selectedBox?.name}
-            </DialogTitle>
-            <DialogDescription className="text-center">
-              لـ {selectedBox?.audience} • تكفي {selectedBox?.duration}
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="space-y-1">
-            <div className="grid grid-cols-3 gap-2 text-xs font-semibold text-muted-foreground border-b border-border pb-2 px-1">
-              <span>المنتج</span>
-              <span className="text-center">الوزن</span>
-              <span className="text-left">السعر</span>
-            </div>
-            {selectedBox?.details.map((d, idx) => (
-              <div
-                key={d.item}
-                className={`grid grid-cols-3 gap-2 text-sm py-2 px-1 rounded-lg ${
-                  idx % 2 === 0 ? "bg-muted/40" : ""
-                }`}
-              >
-                <span className="font-medium text-foreground">{d.item}</span>
-                <span className="text-center text-muted-foreground">{d.weight}</span>
-                <span className="text-left text-foreground">{d.price}</span>
-              </div>
-            ))}
-          </div>
-
-          <div className="border-t border-border pt-3 space-y-2">
-            <div className="flex items-center justify-between text-sm">
-              <span className="flex items-center gap-1.5 text-muted-foreground">
-                <Truck className="h-4 w-4" />
-                التوصيل
-              </span>
-              <span className={`font-semibold ${selectedBox?.deliveryPrice === "مجاني" ? "text-primary" : "text-foreground"}`}>
-                {selectedBox?.deliveryPrice}
-              </span>
-            </div>
-            <div className="flex items-center justify-between bg-primary/10 rounded-xl px-3 py-2">
-              <span className="font-bold text-foreground">المجموع</span>
-              <span className="text-xl font-extrabold text-primary">{selectedBox?.price}</span>
-            </div>
-          </div>
-
-          <Button
-            className="w-full rounded-xl py-5 text-base bg-primary hover:bg-khodari-green-dark text-primary-foreground mt-1"
-            onClick={() => {
-              if (selectedBox) {
-                onOrder(selectedBox.name);
-                setSelectedBox(null);
-              }
-            }}
-          >
-            اطلبي سلتك الآن واستلميها اليوم
-          </Button>
-        </DialogContent>
-      </Dialog>
     </section>
   );
 };
