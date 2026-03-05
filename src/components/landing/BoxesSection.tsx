@@ -141,7 +141,7 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
                     ماذا تحتوي السلة؟
                   </Button>
                 </CollapsibleTrigger>
-                <CollapsibleContent className="mb-4">
+                <CollapsibleContent className="mb-4 overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
                   <div className="bg-muted/30 rounded-xl p-3 space-y-1.5">
                     {box.details.map((d) => (
                       <div key={d.item} className="flex justify-between text-xs text-foreground/80">
