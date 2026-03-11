@@ -27,7 +27,7 @@ const StickyHeader = ({ onOrder }: { onOrder: () => void }) => {
         <Button
           size="sm"
           className="rounded-full bg-primary hover:bg-khodari-green-dark gap-1.5 px-5"
-          onClick={onOrder}
+          onClick={() => document.getElementById("boxes")?.scrollIntoView({ behavior: "smooth" })}
         >
           <ShoppingBasket className="h-4 w-4" />
           اطلبي الآن

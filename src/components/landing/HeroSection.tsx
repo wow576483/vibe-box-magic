@@ -33,7 +33,7 @@ const HeroSection = ({ onOrder }: { onOrder: () => void }) => {
               <Button
                 size="lg"
                 className="text-lg px-8 py-6 rounded-xl bg-primary hover:bg-khodari-green-dark transition-all duration-250 hover:scale-105 shadow-lg"
-                onClick={onOrder}
+                onClick={() => document.getElementById("boxes")?.scrollIntoView({ behavior: "smooth" })}
               >
                 اطلبي سلتك الآن 🛒
               </Button>
