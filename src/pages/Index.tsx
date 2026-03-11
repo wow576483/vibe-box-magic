@@ -36,6 +36,9 @@ const Index = () => {
         <HeroSection onOrder={() => handleOrder()} />
         <SocialProofBar />
         <Suspense fallback={<SectionFallback />}>
+          <BoxesSection onOrder={handleOrder} />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
           <ProblemSection />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
@@ -46,9 +49,6 @@ const Index = () => {
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <HowItWorksSection />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <BoxesSection onOrder={handleOrder} />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <OrderFormSection isOpen={orderOpen} onClose={() => setOrderOpen(false)} selectedBox={selectedBox} />
