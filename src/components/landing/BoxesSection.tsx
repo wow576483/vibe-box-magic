@@ -95,47 +95,47 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
           {boxes.map((box, i) => (
             <div
               key={box.name}
-              className={`relative bg-card rounded-2xl p-6 border-2 flex flex-col transition-all duration-300 hover:scale-[1.03] hover:shadow-xl ${
+              className={`relative bg-card rounded-2xl p-6 border-2 flex flex-col items-center text-center transition-all duration-300 hover:scale-[1.03] hover:shadow-xl ${
                 box.popular ? "border-primary shadow-lg" : "border-border"
               } ${isVisible ? "animate-fade-up" : "opacity-0"}`}
               style={{ animationDelay: `${i * 0.12}s` }}
             >
               {box.popular && (
-                <Badge className="absolute -top-3 right-4 bg-primary text-primary-foreground px-3 py-1">
+                <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-3 py-1">
                   الأكثر طلباً ⭐
                 </Badge>
               )}
 
               {/* Box image */}
-              <img src={box.image} alt={box.name} className="w-full h-40 rounded-xl object-cover mb-4" loading="lazy" />
+              <img src={box.image} alt={box.name} className="w-32 h-32 rounded-full object-cover mb-5 shadow-md" loading="lazy" />
 
               {/* Name */}
-              <h3 className="text-xl font-bold text-foreground mb-1">{box.name}</h3>
+              <h3 className="text-xl font-bold text-foreground mb-2">{box.name}</h3>
 
-              {/* Benefit */}
-              <p className="text-sm text-muted-foreground mb-2">{box.benefit}</p>
+              {/* Benefit - Short and Clear */}
+              <p className="text-sm text-muted-foreground mb-3 leading-relaxed">{box.benefit}</p>
 
               {/* Social proof */}
-              <p className="text-xs font-medium text-primary mb-4">{box.socialProof}</p>
+              <p className="text-sm font-medium text-primary/90 mb-4 bg-primary/5 px-3 py-1 rounded-full">{box.socialProof}</p>
 
-              {/* Price */}
-              <div className="text-3xl font-extrabold text-primary mt-1">{box.price}</div>
-              <p className="text-xs text-muted-foreground mb-6">{box.priceNote}</p>
+              {/* Price - Clear and Big */}
+              <div className="text-3xl font-extrabold text-primary mb-1">{box.price}</div>
+              <p className="text-xs text-muted-foreground/80 mb-5">{box.priceNote}</p>
 
-              {/* Trust bar */}
-              <div className="bg-muted/40 rounded-xl p-3 mb-6 space-y-1.5">
+              {/* Trust bar - 3 points in horizontal row for simplicity */}
+              <div className="flex flex-wrap justify-center gap-2 mb-5 text-xs text-foreground/70">
                 {trustPoints.map((point) => (
-                  <p key={point} className="text-xs text-foreground/80">{point}</p>
+                  <span key={point} className="bg-muted/50 px-2 py-1 rounded-md whitespace-nowrap">{point}</span>
                 ))}
               </div>
 
               {/* Details - Expandable */}
-              <Collapsible>
+              <Collapsible className="w-full">
                 <CollapsibleTrigger asChild>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="w-full mb-4 gap-2 text-muted-foreground hover:text-primary hover:bg-primary/5 border border-border rounded-xl group"
+                    className="w-full mb-4 gap-2 text-muted-foreground hover:text-primary hover:bg-primary/5 border border-border/60 rounded-xl group"
                   >
                     <Info className="h-4 w-4" />
                     ماذا تحتوي السلة؟
@@ -145,7 +145,7 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
                 <CollapsibleContent className="mb-4 overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
                   <div className="rounded-xl border border-border overflow-hidden">
                     {/* Header */}
-                    <div className="grid grid-cols-3 bg-muted/60 px-4 py-2.5 text-xs font-semibold text-foreground/70">
+                    <div className="grid grid-cols-3 bg-muted/60 px-3 py-2 text-xs font-semibold text-foreground/70">
                       <span className="text-right">المنتج</span>
                       <span className="text-center">الوزن</span>
                       <span className="text-left">السعر</span>
@@ -154,7 +154,7 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
                     {box.details.map((d, idx) => (
                       <div
                         key={d.item}
-                        className={`grid grid-cols-3 px-4 py-3 text-sm ${
+                        className={`grid grid-cols-3 px-3 py-2.5 text-sm ${
                           idx % 2 === 0 ? "bg-card" : "bg-muted/20"
                         } ${idx < box.details.length - 1 ? "border-b border-border/50" : ""}`}
                         style={{ animationDelay: `${idx * 0.04}s` }}
@@ -165,13 +165,13 @@ const BoxesSection = ({ onOrder }: { onOrder: (boxName: string) => void }) => {
                       </div>
                     ))}
                     {/* Summary */}
-                    <div className="border-t-2 border-border bg-muted/30 px-4 py-3 space-y-2">
+                    <div className="border-t-2 border-border bg-muted/30 px-3 py-2.5 space-y-1.5">
                       <div className="flex justify-between text-sm text-foreground/70">
                         <span>قيمة المنتجات</span>
                         <span>{box.details.reduce((sum, d) => sum + parseInt(d.price), 0).toLocaleString("ar-DZ")} دج</span>
                       </div>
                       <div className="flex justify-between text-sm text-foreground/70 items-center">
-                        <span className="flex items-center gap-1.5"><Truck className="h-3.5 w-3.5" /> التوصيل</span>
+                        <span className="flex items-center gap-1"><Truck className="h-3.5 w-3.5" /> التوصيل</span>
                         <span>{box.deliveryPrice}</span>
                       </div>
                       <div className="flex justify-between text-base font-bold text-primary bg-primary/10 rounded-lg px-3 py-2 mt-1">
