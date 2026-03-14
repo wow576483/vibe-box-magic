@@ -9,7 +9,6 @@ const BeforeAfterSection = lazy(() => import("@/components/landing/BeforeAfterSe
 const SolutionSection = lazy(() => import("@/components/landing/SolutionSection"));
 const HowItWorksSection = lazy(() => import("@/components/landing/HowItWorksSection"));
 const BoxesSection = lazy(() => import("@/components/landing/BoxesSection"));
-const SeasonalOffersSection = lazy(() => import("@/components/landing/SeasonalOffersSection"));
 const OrderFormSection = lazy(() => import("@/components/landing/OrderFormSection"));
 const TrustSection = lazy(() => import("@/components/landing/TrustSection"));
 const TestimonialsSection = lazy(() => import("@/components/landing/TestimonialsSection"));
@@ -38,9 +37,6 @@ const Index = () => {
         <SocialProofBar />
         <Suspense fallback={<SectionFallback />}>
           <BoxesSection onOrder={handleOrder} />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <SeasonalOffersSection onOrder={() => handleOrder()} />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <ProblemSection />
