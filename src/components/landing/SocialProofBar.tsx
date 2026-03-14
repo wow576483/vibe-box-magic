@@ -16,9 +16,9 @@ const SocialProofBar = () => {
         <div className="grid grid-cols-3 gap-4">
           {stats.map((s) => (
             <div key={s.label} className="text-center">
-              <s.icon className="h-5 w-5 mx-auto mb-1.5 text-primary" />
-              <div className="text-xl md:text-2xl font-bold text-foreground">{s.value}</div>
-              <div className="text-[10px] md:text-xs text-muted-foreground mt-0.5 leading-tight">{s.label}</div>
+              <s.icon className="h-6 w-6 mx-auto mb-2 text-primary" />
+              <div className="text-2xl md:text-3xl font-extrabold text-foreground">{s.value}</div>
+              <div className="text-xs md:text-sm text-muted-foreground mt-1">{s.label}</div>
             </div>
           ))}
         </div>
