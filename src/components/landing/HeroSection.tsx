@@ -38,21 +38,12 @@ const HeroSection = ({ onOrder }: { onOrder: () => void }) => {
                 اطلبي سلتك الآن 🛒
               </Button>
             </div>
-            <div className="flex items-center justify-center sm:justify-start gap-6 bg-card/80 backdrop-blur-sm border border-border/60 rounded-2xl px-5 py-3 shadow-sm">
-              <div className="flex flex-col items-center gap-0.5">
-                <span className="text-base">🚚</span>
-                <span className="text-xs font-medium text-foreground/80">توصيل سريع</span>
-              </div>
-              <div className="w-px h-8 bg-border/60" />
-              <div className="flex flex-col items-center gap-0.5">
-                <span className="text-base">💵</span>
-                <span className="text-xs font-medium text-foreground/80">الدفع عند الاستلام</span>
-              </div>
-              <div className="w-px h-8 bg-border/60" />
-              <div className="flex flex-col items-center gap-0.5">
-                <span className="text-base">⭐</span>
-                <span className="text-xs font-medium text-foreground/80">+127 تقييم</span>
-              </div>
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <span className="flex items-center gap-1">🚚 توصيل سريع</span>
+              <span className="w-1 h-1 bg-border rounded-full" />
+              <span className="flex items-center gap-1">💵 الدفع عند الاستلام</span>
+              <span className="w-1 h-1 bg-border rounded-full" />
+              <span className="flex items-center gap-1">⭐ +127 تقييم</span>
             </div>
           </div>
 
