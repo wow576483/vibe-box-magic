@@ -52,27 +52,27 @@ const OrderFormContent = ({ selectedBox, onSuccess, loading, setLoading }: {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 px-1">
       {selectedBox && (
-        <p className="text-center text-primary font-semibold text-sm">
+        <p className="text-center text-primary font-semibold text-sm animate-fade-in">
           🥬 اخترتِ {selectedBox} – اختيار ممتاز 👌
         </p>
       )}
 
-      <div className="space-y-1.5">
+      <div className="space-y-1.5 animate-fade-in" style={{ animationDelay: "0.05s", animationFillMode: "both" }}>
         <Label htmlFor="name" className="text-sm">الاسم الكامل</Label>
         <Input id="name" placeholder="مثال: سارة بوعلام" value={name} onChange={(e) => setName(e.target.value)} required disabled={loading} />
       </div>
 
-      <div className="space-y-1.5">
+      <div className="space-y-1.5 animate-fade-in" style={{ animationDelay: "0.1s", animationFillMode: "both" }}>
         <Label htmlFor="phone" className="text-sm">رقم الهاتف</Label>
         <Input id="phone" type="tel" placeholder="07XX XX XX XX" value={phone} onChange={(e) => setPhone(e.target.value)} required dir="ltr" className="text-right" disabled={loading} />
       </div>
 
-      <div className="space-y-1.5">
+      <div className="space-y-1.5 animate-fade-in" style={{ animationDelay: "0.15s", animationFillMode: "both" }}>
         <Label htmlFor="address" className="text-sm">العنوان</Label>
         <Input id="address" placeholder="مثال: حي سيدي مبروك، عمارة 12" value={address} onChange={(e) => setAddress(e.target.value)} required disabled={loading} />
       </div>
 
-      <div className="space-y-1.5">
+      <div className="space-y-1.5 animate-fade-in" style={{ animationDelay: "0.2s", animationFillMode: "both" }}>
         <Label htmlFor="delivery-time" className="text-sm">أفضل وقت للتوصيل</Label>
         <Select value={deliveryTime} onValueChange={setDeliveryTime} required disabled={loading}>
           <SelectTrigger id="delivery-time">
@@ -86,7 +86,7 @@ const OrderFormContent = ({ selectedBox, onSuccess, loading, setLoading }: {
         </Select>
       </div>
 
-      <Button type="submit" size="lg" className="w-full text-base py-5 rounded-xl bg-primary hover:bg-khodari-green-dark transition-all duration-250 hover:scale-[1.02] shadow-lg gap-2" disabled={loading}>
+      <Button type="submit" size="lg" className="w-full text-base py-5 rounded-xl bg-primary hover:bg-khodari-green-dark transition-all duration-250 hover:scale-[1.02] shadow-lg gap-2 animate-fade-in" style={{ animationDelay: "0.25s", animationFillMode: "both" }} disabled={loading}>
         {loading ? (
           <><Loader2 className="h-5 w-5 animate-spin" />جاري الإرسال...</>
         ) : (
@@ -94,7 +94,7 @@ const OrderFormContent = ({ selectedBox, onSuccess, loading, setLoading }: {
         )}
       </Button>
 
-      <p className="text-xs text-muted-foreground text-center">
+      <p className="text-xs text-muted-foreground text-center animate-fade-in" style={{ animationDelay: "0.3s", animationFillMode: "both" }}>
         ✔ الدفع عند الاستلام &nbsp; ✔ تفقدي السلة قبل الدفع &nbsp; ✔ إلغاء مجاني
       </p>
     </form>
