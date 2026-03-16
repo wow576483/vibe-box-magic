@@ -24,9 +24,6 @@ const Index = () => {
   const handleOrder = (boxName?: string) => {
     setSelectedBox(boxName);
     setOrderOpen(true);
-    setTimeout(() => {
-      document.getElementById("order-form")?.scrollIntoView({ behavior: "smooth" });
-    }, 100);
   };
 
   return (
