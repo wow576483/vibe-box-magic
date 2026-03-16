@@ -24,9 +24,6 @@ const Index = () => {
   const handleOrder = (boxName?: string) => {
     setSelectedBox(boxName);
     setOrderOpen(true);
-    setTimeout(() => {
-      document.getElementById("order-form")?.scrollIntoView({ behavior: "smooth" });
-    }, 100);
   };
 
   return (
@@ -50,7 +47,7 @@ const Index = () => {
         <Suspense fallback={<SectionFallback />}>
           <HowItWorksSection />
         </Suspense>
-        <Suspense fallback={<SectionFallback />}>
+        <Suspense fallback={null}>
           <OrderFormSection isOpen={orderOpen} onClose={() => setOrderOpen(false)} selectedBox={selectedBox} />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
