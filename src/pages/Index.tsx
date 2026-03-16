@@ -47,7 +47,7 @@ const Index = () => {
         <Suspense fallback={<SectionFallback />}>
           <HowItWorksSection />
         </Suspense>
-        <Suspense fallback={<SectionFallback />}>
+        <Suspense fallback={null}>
           <OrderFormSection isOpen={orderOpen} onClose={() => setOrderOpen(false)} selectedBox={selectedBox} />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
