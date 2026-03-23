@@ -9,6 +9,7 @@ const BeforeAfterSection = lazy(() => import("@/components/landing/BeforeAfterSe
 const SolutionSection = lazy(() => import("@/components/landing/SolutionSection"));
 const HowItWorksSection = lazy(() => import("@/components/landing/HowItWorksSection"));
 const BoxesSection = lazy(() => import("@/components/landing/BoxesSection"));
+const SubscriptionSection = lazy(() => import("@/components/landing/SubscriptionSection"));
 const OrderFormSection = lazy(() => import("@/components/landing/OrderFormSection"));
 const TrustSection = lazy(() => import("@/components/landing/TrustSection"));
 const TestimonialsSection = lazy(() => import("@/components/landing/TestimonialsSection"));
