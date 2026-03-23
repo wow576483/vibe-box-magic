@@ -36,8 +36,10 @@ const Index = () => {
         <Suspense fallback={<SectionFallback />}>
           <BoxesSection onOrder={handleOrder} />
         </Suspense>
+        </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <SubscriptionSection onOrder={() => handleOrder()} />
+        </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <ProblemSection />
         </Suspense>
